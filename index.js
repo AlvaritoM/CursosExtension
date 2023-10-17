@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import "dotenv/config";
+import userRouter from "./src/routes/user.routes.js";
 // Configuracion inicial
 const app = express();
 
@@ -16,3 +17,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 // Crear las rutas
+app.use("/api", userRouter);
