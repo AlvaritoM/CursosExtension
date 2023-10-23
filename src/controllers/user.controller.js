@@ -1,3 +1,9 @@
+import User from "../models/user.js";
+
 export const getUsers = (req, res) => {
-  res.send("prueba");
+  try {
+    res.send("prueba");
+  } catch (error) {
+    console.log(error);
+  }
 };
