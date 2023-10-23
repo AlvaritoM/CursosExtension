@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import "dotenv/config";
 import userRouter from "./src/routes/user.routes.js";
+import "./src/database/database.js";
 // Configuracion inicial
 const app = express();
 
