@@ -1,21 +1,24 @@
-import { Sequelize } from "sequelize";
+import Sequelize from "sequelize";
+import sequelize from "../database/database.js";
 
-const User = sequelize.define(
+const USER = sequelize.define(
   "User",
   {
-    nombre: {
-      type: String,
-      required: true,
-      maxLenght: 45,
+    name: {
+      type: Sequelize.STRING, // Debes usar Sequelize.STRING en lugar de String
+      allowNull: false, // Debes usar allowNull en lugar de required
+      maxLength: 45, // Debes usar maxLength en lugar de maxLenght
     },
-    apellido: {
-      type: String,
-      required: true,
+    surename: {
+      type: Sequelize.STRING,
+      allowNull: false,
       maxLength: 45,
     },
   },
   {
     schema: "public", // Nombre del esquema en PostgreSQL
+    timestamps: true,
   }
 );
-export default User;
+
+export default USER;
