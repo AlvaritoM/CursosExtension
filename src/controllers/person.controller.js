@@ -1,9 +1,9 @@
-import User from "../models/user.js";
+import User from "../models/person.js";
 
-export const getUsers = async (req, res) => {
+export const getPerson = async (req, res) => {
   try {
-    const users = await User.findAll();
-    res.status(200).json(users);
+    const persons = await Person.findAll();
+    res.status(200).json(persons);
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -12,14 +12,14 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const addUsers = async (req, res) => {
+export const addPerson = async (req, res) => {
   try {
     //res.send("User added");
     console.log(req.body);
-    const newUser = new User(req.body);
-    await newUser.save();
+    const newPerson = new Person(req.body);
+    await newPerson.save();
     res.status(201).json({
-      msg: "User added correctly",
+      msg: "Person added correctly",
     });
   } catch (error) {
     console.log(error);
@@ -29,13 +29,13 @@ export const addUsers = async (req, res) => {
   }
 };
 
-export const updateUsers = async (req, res) => {
-  const userId = req.params.id; // Obtener el ID del usuario a actualizar
+export const updatePerson = async (req, res) => {
+  const personId = req.params.id; // Obtener el ID del usuario a actualizar
   const updatedData = req.body; // Obtener los datos actualizados desde el cuerpo de la solicitud
 
   try {
-    const [updatedRowsCount] = await User.update(updatedData, {
-      where: { id: userId },
+    const [updatedRowsCount] = await Person.update(updatedData, {
+      where: { id: personId },
     });
 
     if (updatedRowsCount > 0) {
@@ -49,12 +49,12 @@ export const updateUsers = async (req, res) => {
   }
 };
 
-export const deleteUser = async (req, res) => {
-  const userId = req.params.id; // Obtener el ID del usuario a eliminar
+export const deletePerson = async (req, res) => {
+  const personId = req.params.id; // Obtener el ID del usuario a eliminar
 
   try {
-    const deletedRowCount = await User.destroy({
-      where: { id: userId },
+    const deletedRowCount = await Person.destroy({
+      where: { id: personId },
     });
 
     if (deletedRowCount > 0) {
