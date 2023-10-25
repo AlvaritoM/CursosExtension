@@ -24,4 +24,5 @@ sequelize
     console.error("Error al conectar a la base de datos:", error);
   });
 
+export default sequelize;
 // Define modelos y realiza otras configuraciones de Sequelize aquí...
