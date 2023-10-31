@@ -1,8 +1,9 @@
 import User from "../models/user.js";
+import bcrypt from "bcrypt";
 
 export const login = async (req, res) => {
   try {
-    const { mail, password } = req.body;
+    const { email, password } = req.body;
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -11,8 +12,8 @@ export const login = async (req, res) => {
     }
     res.status(200).json({
       msg: "El usuario existe",
-      uid: user._id,
-      name: user.user,
+      uid: user.id,
+      name: user.first_name,
     });
   } catch (error) {
     console.log(error);
@@ -35,11 +36,24 @@ export const getUser = async (req, res) => {
 };
 export const addUser = async (req, res) => {
   try {
-    console.log(req.body);
-    const newUser = await User.create(req.body); // Utiliza el método create() en lugar de new Person()
+    const { email, password } = req.body;
+
+    let user = await User.findOne({ where: { email } });
+    console.log(user);
+    if (user) {
+      return res.status(400).json({
+        msg: "Ya existe un usuario con el correo solicitado",
+      });
+    }
+    const newUser = new User(req.body);
+    console.log(newUser);
+    const salt = bcrypt.genSaltSync(10);
+    newUser.password = bcrypt.hashSync(password, salt);
+    await newUser.save();
     res.status(201).json({
-      msg: "User added correctly",
-      data: newUser, // Opcional: puedes enviar los datos de la persona creada en la respuesta
+      msg: "El usuario existe",
+      uid: user.id,
+      name: user.first_name,
     });
   } catch (error) {
     console.log(error);
