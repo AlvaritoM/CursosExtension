@@ -4,12 +4,18 @@ import bcrypt from "bcrypt";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(400).json({
         msg: "Correo o password invalido",
       });
     }
+    const isPasswordValid = await bcrypt.compareSync(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
     res.status(200).json({
       msg: "El usuario existe",
       uid: user.id,
