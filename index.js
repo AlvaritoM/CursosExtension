@@ -4,6 +4,7 @@ import morgan from "morgan";
 import "dotenv/config";
 import userRouter from "./src/routes/user.routes.js";
 import "./src/database/database.js";
+import path from "path";
 // Configuracion inicial
 const app = express();
 
@@ -18,4 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 // Crear las rutas
+app.use(
+  express.static(
+    path.join("/Users/alvaro/Desktop/Proyecto Final/Backend", "/public")
+  )
+);
 app.use("/api", userRouter);
